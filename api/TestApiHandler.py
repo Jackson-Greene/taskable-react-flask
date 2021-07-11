@@ -1,11 +1,14 @@
 from flask_restful import Api, Resource, reqparse
+import pymongo
+
+client = pymongo.MongoClient("mongodb+srv://server_user:jUsACC1ArA4sxrOA@cluster0.htuco.mongodb.net/myFirstDatabase?retryWrites=true&w=majority")
+database = client["tasks"]
+user_tasks_collection = database.get_collection("user_tasks")
 
 class TestApiHandler(Resource):
   def get(self):
-    return {
-      'resultStatus': 'SUCCESS',
-      'message': "Hello Api Handler"
-      }
+    
+    return(user_tasks_collection.find_one())
 
   def post(self):
     print(self)

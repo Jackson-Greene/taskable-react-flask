@@ -12,3 +12,6 @@ def serve(path):
     return send_from_directory(app.static_folder,'index.html')
 
 api.add_resource(TestApiHandler, '/flask/test')
+
+#mongo username: server_user
+#mongo password: jUsACC1ArA4sxrOA
