@@ -1,0 +1,123 @@
+*, *::before, *::after 
+{
+    box-sizing: border-box;
+}
+
+.pending-tasks-section
+{
+  padding: 0 2rem;
+
+  .heading-container
+  {
+    display: flex;
+    flex-basis: 100%;
+
+    img
+    {
+      margin-left: auto;
+      width: 1.5rem;
+      height: 1.5rem;
+      margin-top: 1.75rem;
+    }
+  }
+}
+
+.calendar-section
+{
+  padding-top: 1rem;
+  padding-bottom: 1.75rem;
+  padding-left: 0.2rem;
+  padding-right: 0.2rem;
+  background: #F6F6F6;
+}
+
+.completed-tasks-section
+{
+  padding: 0 2rem;
+}
+
+
+
+.button
+{
+  width: 6rem;
+  height: 3rem;
+}
+
+
+.new-task-section
+{
+  padding: 0 2rem;
+
+  .container
+  {
+    h1
+    {
+      font-size: 2rem;
+      margin-bottom: 2rem;
+    }
+
+    h2
+    {
+      padding: 0;
+      margin: 0;
+      margin-top: 2rem;
+    }
+
+    .input-field
+    {
+      margin-top: 0.6rem;
+      height: 2.5rem;
+      width: 18rem;
+    }
+
+    .drop-down
+    {
+      width: 5rem;
+      height: 2.5rem;
+      margin-top: 0.6rem;
+    }
+
+    .duration-container
+    {
+      display: flex;
+      gap: 0.5rem;
+
+      .input-field
+      {
+        width: 3rem;
+        height: 2.5rem;
+        margin-top: 0.6rem;
+      }
+
+      .drop-down
+      {
+        height: 2.5rem;
+        width: 6rem;
+        margin-top: 0.6rem;
+      }
+    }
+
+    .color-picker
+    {
+      width: 12.5rem;
+      height: calc(calc(12.5rem - 3.75rem)/4);
+      margin-top: 0.6rem;
+    }
+
+    .actions-container
+    {
+      display: flex;
+      flex-basis: 100%;
+      gap: 0.75rem;
+      float: right;
+      padding-top: 4.25rem;
+
+      .button
+      {
+        width: 7.5rem;
+        height: 3rem;
+      }
+    }
+  }
+}

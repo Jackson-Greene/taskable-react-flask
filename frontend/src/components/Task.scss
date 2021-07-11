@@ -1,0 +1,98 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&display=swap');
+
+*, *::before, *::after 
+{
+    box-sizing: border-box;
+}
+
+.task
+{
+    font-family: Poppins;
+    min-width: 100%;
+
+    .container
+    {
+        display: flex;
+        flex-basis: 100%;
+        justify-content: space-between;
+
+        .stage-icon-container
+        {
+            width: auto;
+            height: 2.5rem;
+            text-align: left;
+            align-self: center;
+            margin-right: 1rem;
+            background: #A799FF;
+            border-radius: 50%;
+            img 
+            {
+                width: 2.5rem;
+                padding: 0.5rem;
+            }
+        }
+
+        .task-container
+        {
+            cursor: pointer;
+            background: #C7BEFF;
+            width: auto;
+            overflow: hidden;
+
+            display: flex;
+            flex-basis: 100%;
+            justify-content: space-between;
+
+            border-radius: 1rem;
+            padding: 1rem 1.5rem;
+
+            .left-col
+            {
+                width: 65%;
+                
+                p
+                {
+                    padding: 0;
+                    margin: 0;
+                    color: #404040;
+                }
+                h2
+                {
+                    padding: 0;
+                    margin: 0;
+                    font-weight: 500;  
+                    overflow: hidden;
+                    width: 100%; 
+                    white-space: nowrap; 
+                    text-overflow: ellipsis;
+                }
+
+            }
+
+            .right-col
+            {
+                width: 6rem;
+                
+                p
+                {
+                    text-align: right;
+                    padding: 0;
+                    margin: 0;
+                    color: #404040;
+                    padding-bottom: 0.3rem;
+                    padding-right: 0.25rem;
+                }
+
+                .stage-text-container
+                {
+                    background-color: #A799FF;
+                    padding: 0.3rem 1rem;
+                    border-radius: 1rem;
+                    color: white;
+                    font-size: 0.7rem;
+                    text-align: center;
+                }
+            }
+        }
+    }
+}

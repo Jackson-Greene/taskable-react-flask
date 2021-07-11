@@ -1,0 +1,34 @@
+*, *::before, *::after 
+{
+    box-sizing: border-box;
+}
+
+.calendar
+{   
+    .container
+    {
+        h1
+        {
+            text-align: left;
+            padding-left: 2rem;
+            font-weight: bold;
+        }
+        .scroller-container
+        {
+            width: 100%;
+            height: 100%;
+            cursor: pointer;
+            border-radius: 0.65rem;
+            display: flex;
+            gap: 0.25rem;
+            justify-content: center;
+            align-items: center;
+
+            .day-card
+            {
+                width: 4.00rem;
+                height: 4.75rem;
+            }
+        }
+    }
+}
