@@ -2,8 +2,9 @@ import React, { useState } from 'react'
 import './Calendar.scss';
 import DayCard from './DayCard';
 
-function Calendar() 
+function Calendar(props) 
 {
+    let { parentCallback } = props;
     let months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 
     let current_week_temp = []
@@ -30,6 +31,8 @@ function Calendar()
     const [selected_date, setSelectedDate] = useState(today_date);
     const [selected_month, setSelectedMonth] = useState(months[today_date.getMonth()]);
 
+    parentCallback(selected_date);
+
     function areDatesEqual(date_1, date_2)
     {
         if((date_1.getDate() === date_2.getDate()) && (date_1.getMonth() === date_2.getMonth()) && (date_1.getYear() === date_2.getYear()))
@@ -50,6 +53,7 @@ function Calendar()
         }
 
         setSelectedDate(current_week[0]);
+        parentCallback(selected_date);
         setSelectedMonth(months[selected_date.getMonth()]);
         setCurrentWeek(current_week.slice());
     }
@@ -62,6 +66,7 @@ function Calendar()
         }
 
         setSelectedDate(current_week[0]);
+        parentCallback(selected_date);
         setSelectedMonth(months[selected_date.getMonth()]);
         setCurrentWeek(current_week.slice());
     }
@@ -69,6 +74,7 @@ function Calendar()
     function dayCardClicked(date)
     {
         setSelectedDate(date);
+        parentCallback(selected_date);
         setSelectedMonth(months[selected_date.getMonth()]);
     }
 

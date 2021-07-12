@@ -10,6 +10,8 @@ import Button from './components/Button';
 import DayCard from './components/DayCard';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { useHistory } from 'react-router-dom';
+import React, { useState } from 'react'
+import axios from 'axios';
 
 function App() 
 {
@@ -17,48 +19,110 @@ function App()
 
   let pending_tasks = 
   [
-    {
-      "name": "Go shopping",
-      "priority": "Low Priority",
-      "duration": "2 Hours",
-      "stage": "In Progress",
-      "color": "purple"
-    },
-    {
-      "name": "Create a react application",
-      "priority": "Medium Priority",
-      "duration": "20 Minutes",
-      "stage": "Upcoming",
-      "color": "blue"
-    },
+    // {
+    //   "name": "Go shopping",
+    //   "priority": "Low Priority",
+    //   "duration": "2 Hours",
+    //   "stage": "In Progress",
+    //   "color": "purple"
+    // },
+    // {
+    //   "name": "Create a react application",
+    //   "priority": "Medium Priority",
+    //   "duration": "20 Minutes",
+    //   "stage": "Upcoming",
+    //   "color": "blue"
+    // },
   ]
 
   let completed_tasks = 
   [
-    {
-      "name": "Make lunch",
-      "priority": "Low Priority",
-      "duration": "20 Minutes",
-      "stage": "Completed",
-      "color": "green"
-    },
-    {
-      "name": "Walk dog",
-      "priority": "High Priority",
-      "duration": "1 Hour",
-      "stage": "Completed",
-      "color": "orange"
-    },
+    // {
+    //   "name": "Make lunch",
+    //   "priority": "Low Priority",
+    //   "duration": "20 Minutes",
+    //   "stage": "Completed",
+    //   "color": "green"
+    // },
+    // {
+    //   "name": "Walk dog",
+    //   "priority": "High Priority",
+    //   "duration": "1 Hour",
+    //   "stage": "Completed",
+    //   "color": "orange"
+    // },
   ]
+
+  const [selected_date, setSelectedDate] = useState(new Date());
+
 
   let priority_drop_down_options = ["Low", "Medium", "High"];
   let duration_drop_down_options = ["Minutes", "Hours"];
+
+  function updateParentDate(date)
+  {
+    let day = date.getDate().toString();
+    let month = (date.getMonth() + 1).toString();
+    let year =  date.getFullYear().toString();
+
+    if(day.length === 1)
+    {
+      day = "0" + day;
+    }
+
+    if(month.length === 1)
+    {
+      month = "0" + month;
+    }
+
+    axios.get("http://127.0.0.1:5000/api/tasks?date=" + (day + month + year)).then((res) => 
+        {
+            const response_data = res.data;
+            let tasks_json_array = response_data["tasks"];
+
+            completed_tasks = [];
+            pending_tasks = [];
+
+            for(let i = 0; i < tasks_json_array.length; i++) 
+            {
+              let current_task = tasks_json_array[i];
+              if(current_task["stage"] === "completed")
+              {
+                completed_tasks.push(
+                  {
+                    "name": current_task["name"],
+                    "priority": current_task["priority"] + "priority",
+                    "duration": current_task["duration"],
+                    "stage": current_task["stage"],
+                    "color": current_task["color"]
+                  }
+                );
+              }
+              else
+              {
+                pending_tasks.push(
+                  {
+                    "name": current_task["name"],
+                    "priority": current_task["priority"] + " priority",
+                    "duration": current_task["duration"],
+                    "stage": current_task["stage"],
+                    "color": current_task["color"]
+                  }
+                );
+              }
+            }
+            
+            console.log(completed_tasks)
+            console.log(pending_tasks)
+            setSelectedDate(date);
+        });
+  }
 
   return (
     <div className="App">
 
       <section className="calendar-section">
-        <Calendar></Calendar>
+        <Calendar parentCallback={updateParentDate}></Calendar>
       </section>
       <Switch>
         <Route exact path="/">

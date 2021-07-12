@@ -2,8 +2,7 @@ import os
 from flask import Flask, send_from_directory, request, url_for, redirect, session
 from flask_restful import Api, Resource, reqparse
 from flask_cors import CORS #comment this on deployment
-from api.TestApiHandler import TestApiHandler
-from api.NameApiHandler import NameApiHandler
+from api.TaskApiHandler import TaskApiHandler
 from authlib.integrations.flask_client import OAuth
 from datetime import timedelta
 #from auth_decorator import login_required
@@ -55,8 +54,7 @@ def authorize():
     # Here you use the profile/user data that you got and query your database find/register the user
     # and set ur own data in the session not the profile from google
 
-    session['profile'] = user_info
-    print(str(session["profile"]) + "BEFORE")
+    session["id"] = user_info["id"]
     session.permanent = True  # make the session permanant so it keeps existing after broweser gets closed
     return redirect('/')
 
@@ -68,8 +66,7 @@ def logout():
     return redirect('/')
 
 
-api.add_resource(NameApiHandler, '/flask/name')
-api.add_resource(TestApiHandler, '/flask/test')
+api.add_resource(TaskApiHandler, '/api/tasks')
 
 #mongo username: server_user
 #mongo password: jUsACC1ArA4sxrOA
