@@ -11,7 +11,8 @@ class NameApiHandler(Resource):
     print(session["profile"])
 
     json_to_return = {}
-    json_to_return["name"] = "test"
+    json_to_return["name"] = session["profile"]["id"]
+    return(json_to_return)
 
   def post(self):
     
