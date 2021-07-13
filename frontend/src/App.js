@@ -15,6 +15,8 @@ import axios from 'axios';
 
 let pending_tasks = [];
 let completed_tasks = [];
+let name_current_value = "";
+let duration_current_value = "";
 
 function App() 
 {
@@ -33,6 +35,8 @@ function App()
 
   function updateParentDate(date)
   {
+    console.log("parent update called with: " + date.toString());
+
     let day = date.getDate().toString();
     let month = (date.getMonth() + 1).toString();
     let year =  date.getFullYear().toString();
@@ -100,6 +104,21 @@ function App()
     });
   }
 
+  function setNameCurrentValue(value)
+  {
+    name_current_value = value;
+  }
+
+  function setDurationCurrentValue(value)
+  {
+    duration_current_value = value;
+  }
+
+  function doneButtonClicked()
+  {
+    console.log("values: " + name_current_value + " " + duration_current_value);
+  }
+
   return (
     <div className="App">
 
@@ -114,7 +133,7 @@ function App()
 
               <div className="heading-container">
                 <h1>Pending Tasks</h1>
-                <img src="./images/icon-add-task.svg" alt="add new task" onClick={() => history.push("/new-task")}></img>
+                <img src="./images/icon-add-task.svg" alt="add new task" onClick={() => history.push("/new_task")}></img>
               </div>
 
               <div className="pending-tasks-list-container">
@@ -134,7 +153,6 @@ function App()
               </div>
 
               <div className="completed-tasks-list-container">
-                {console.log("rendered completed")}
                 <TaskList tasks={completed_tasks}></TaskList>
               </div>
             </div>
@@ -143,25 +161,25 @@ function App()
         </Route>
 
 
-        <Route path="/new-task">
+        <Route path="/new_task">
 
             <section className="new-task-section">
               <div className="container">
                 <h1>New Task</h1>
                 <h2>Name</h2>
-                <InputField></InputField>
+                <InputField valueCallback={setNameCurrentValue}></InputField>
                 <h2>Priority</h2>
                 <DropDown options={priority_drop_down_options}></DropDown>
                 <h2>Duration</h2>
                 <div className="duration-container">
-                  <InputField></InputField>
+                  <InputField valueCallback={setDurationCurrentValue}></InputField>
                   <DropDown options={duration_drop_down_options}></DropDown>
                 </div>
                 <h2>Color</h2>
                 <ColorPicker></ColorPicker>
                 <div className="actions-container">
-                  <Button text="Cancel" color="#000000" background="#ffffff" outline={true}></Button>
-                  <Button text="Done" background="#000000"></Button>
+                  <Button text="Cancel" color="#000000" background="#ffffff" outline={true} onClick={() => history.push("/")}></Button>
+                  <Button text="Done" background="#000000" onClick={doneButtonClicked}></Button>
                 </div>
               </div>
             </section>

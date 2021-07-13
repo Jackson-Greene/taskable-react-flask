@@ -2,34 +2,36 @@ import React, { useState } from 'react'
 import './Calendar.scss';
 import DayCard from './DayCard';
 
+let months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+
+let current_week_temp = []
+
+let today_date = new Date();
+let today_date_day = today_date.getDay() - 1;
+if(today_date_day === -1)
+{
+    today_date_day = 6;
+}
+
+current_week_temp[today_date_day] = today_date;
+
+for(let i = 0; i <= 6; i++)
+{
+    if(i != today_date_day)
+    {
+        let difference_in_days = (i - today_date_day);
+        current_week_temp[i] = new Date(today_date.valueOf() + (difference_in_days * 86400000)); 
+    }
+}
+
+let current_week = current_week_temp;
+let selected_month = months[today_date.getMonth()];
+
 function Calendar(props) 
 {
     let { parentCallback } = props;
-    let months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-
-    let current_week_temp = []
-
-    let today_date = new Date();
-    let today_date_day = today_date.getDay() - 1;
-    if(today_date_day === -1)
-    {
-        today_date_day = 6;
-    }
     
-    current_week_temp[today_date_day] = today_date;
-    
-    for(let i = 0; i <= 6; i++)
-    {
-        if(i != today_date_day)
-        {
-            let difference_in_days = (i - today_date_day);
-            current_week_temp[i] = new Date(today_date.valueOf() + (difference_in_days * 86400000)); 
-        }
-    }
-    
-    const [current_week, setCurrentWeek] = useState(current_week_temp);
     const [selected_date, setSelectedDate] = useState(today_date);
-    const [selected_month, setSelectedMonth] = useState(months[today_date.getMonth()]);
 
     function areDatesEqual(date_1, date_2)
     {
@@ -50,10 +52,11 @@ function Calendar(props)
             current_week[i] = new Date(current_week[i].valueOf() + 604800000)
         }
 
+        
+        selected_month = months[current_week[0].getMonth()];
+
         setSelectedDate(current_week[0]);
-        parentCallback(selected_date);
-        setSelectedMonth(months[selected_date.getMonth()]);
-        setCurrentWeek(current_week.slice());
+        parentCallback(current_week[0]);
     }
 
     function decreaseCurrentWeek()
@@ -63,17 +66,18 @@ function Calendar(props)
             current_week[i] = new Date(current_week[i].valueOf() - 604800000)
         }
 
+        
+        selected_month = months[current_week[0].getMonth()];
+
         setSelectedDate(current_week[0]);
-        parentCallback(selected_date);
-        setSelectedMonth(months[selected_date.getMonth()]);
-        setCurrentWeek(current_week.slice());
+        parentCallback(current_week[0]);
     }
 
     function dayCardClicked(date)
     {
         setSelectedDate(date);
-        parentCallback(selected_date);
-        setSelectedMonth(months[selected_date.getMonth()]);
+        selected_month = months[date.getMonth()];
+        parentCallback(date);
     }
 
 
