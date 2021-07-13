@@ -31,8 +31,6 @@ function Calendar(props)
     const [selected_date, setSelectedDate] = useState(today_date);
     const [selected_month, setSelectedMonth] = useState(months[today_date.getMonth()]);
 
-    parentCallback(selected_date);
-
     function areDatesEqual(date_1, date_2)
     {
         if((date_1.getDate() === date_2.getDate()) && (date_1.getMonth() === date_2.getMonth()) && (date_1.getYear() === date_2.getYear()))

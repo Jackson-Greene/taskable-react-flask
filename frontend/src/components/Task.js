@@ -7,15 +7,15 @@ function Task(props)
     let stage_image_path = "";
     switch(stage) 
     {
-        case "Upcoming":
+        case "upcoming":
             stage_image_path = "./images/icon-upcoming.svg";
             break;
         
-        case "In Progress":
+        case "in progress":
             stage_image_path = "./images/icon-in-progress.svg";
             break;
 
-        case "Completed":
+        case "completed":
             stage_image_path = "./images/icon-completed.svg";
             break;
     

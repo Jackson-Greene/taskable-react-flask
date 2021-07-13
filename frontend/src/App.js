@@ -10,54 +10,26 @@ import Button from './components/Button';
 import DayCard from './components/DayCard';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { useHistory } from 'react-router-dom';
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import axios from 'axios';
+
+let pending_tasks = [];
+let completed_tasks = [];
 
 function App() 
 {
   let history = useHistory();
 
-  let pending_tasks = 
-  [
-    // {
-    //   "name": "Go shopping",
-    //   "priority": "Low Priority",
-    //   "duration": "2 Hours",
-    //   "stage": "In Progress",
-    //   "color": "purple"
-    // },
-    // {
-    //   "name": "Create a react application",
-    //   "priority": "Medium Priority",
-    //   "duration": "20 Minutes",
-    //   "stage": "Upcoming",
-    //   "color": "blue"
-    // },
-  ]
-
-  let completed_tasks = 
-  [
-    // {
-    //   "name": "Make lunch",
-    //   "priority": "Low Priority",
-    //   "duration": "20 Minutes",
-    //   "stage": "Completed",
-    //   "color": "green"
-    // },
-    // {
-    //   "name": "Walk dog",
-    //   "priority": "High Priority",
-    //   "duration": "1 Hour",
-    //   "stage": "Completed",
-    //   "color": "orange"
-    // },
-  ]
-
-  const [selected_date, setSelectedDate] = useState(new Date());
+  const [selected_date, setSelecteDate] = useState(new Date());
 
 
   let priority_drop_down_options = ["Low", "Medium", "High"];
   let duration_drop_down_options = ["Minutes", "Hours"];
+
+  useEffect(() => 
+  {
+      updateParentDate(new Date());
+  }, []);
 
   function updateParentDate(date)
   {
@@ -76,46 +48,56 @@ function App()
     }
 
     axios.get("http://127.0.0.1:5000/api/tasks?date=" + (day + month + year)).then((res) => 
+    {
+        const response_data = res.data;
+        let tasks_json_array = response_data["tasks"];
+
+        let completed_tasks_temp = [];
+        let pending_tasks_temp = [];
+
+        //convert to filter
+        for(let i = 0; i < tasks_json_array.length; i++) 
         {
-            const response_data = res.data;
-            let tasks_json_array = response_data["tasks"];
-
-            completed_tasks = [];
-            pending_tasks = [];
-
-            for(let i = 0; i < tasks_json_array.length; i++) 
-            {
-              let current_task = tasks_json_array[i];
-              if(current_task["stage"] === "completed")
+          let current_task = tasks_json_array[i];
+          if(current_task["stage"] === "completed")
+          {
+            completed_tasks_temp.push(
               {
-                completed_tasks.push(
-                  {
-                    "name": current_task["name"],
-                    "priority": current_task["priority"] + "priority",
-                    "duration": current_task["duration"],
-                    "stage": current_task["stage"],
-                    "color": current_task["color"]
-                  }
-                );
+                "name": current_task["name"],
+                "priority": current_task["priority"] + " priority",
+                "duration": current_task["duration"],
+                "stage": current_task["stage"],
+                "color": current_task["color"]
               }
-              else
+            );
+          }
+          else
+          {
+            pending_tasks_temp.push(
               {
-                pending_tasks.push(
-                  {
-                    "name": current_task["name"],
-                    "priority": current_task["priority"] + " priority",
-                    "duration": current_task["duration"],
-                    "stage": current_task["stage"],
-                    "color": current_task["color"]
-                  }
-                );
+                "name": current_task["name"],
+                "priority": current_task["priority"] + " priority",
+                "duration": current_task["duration"],
+                "stage": current_task["stage"],
+                "color": current_task["color"]
               }
-            }
-            
-            console.log(completed_tasks)
-            console.log(pending_tasks)
-            setSelectedDate(date);
-        });
+            );
+          }
+        }
+        
+        pending_tasks = pending_tasks_temp;
+        completed_tasks = completed_tasks_temp;
+        setSelecteDate(date);
+    }).catch(function(error)
+    {
+      if(error.response)
+      {
+        console.log("there was an error")
+        pending_tasks = [];
+        completed_tasks = [];
+        setSelecteDate(date);
+      }
+    });
   }
 
   return (
@@ -136,6 +118,8 @@ function App()
               </div>
 
               <div className="pending-tasks-list-container">
+                {console.log("rendered pending")}
+                {console.log(pending_tasks)}
                 <TaskList tasks={pending_tasks}></TaskList>
               </div>
 
@@ -150,6 +134,7 @@ function App()
               </div>
 
               <div className="completed-tasks-list-container">
+                {console.log("rendered completed")}
                 <TaskList tasks={completed_tasks}></TaskList>
               </div>
             </div>
