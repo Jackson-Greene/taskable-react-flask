@@ -28,7 +28,7 @@ class TasksPutApiHandler(Resource):
   def get(self): 
     return({})
 
-  def post(self):
+  def put(self):
     parser = reqparse.RequestParser()
     parser.add_argument('date', type=str)
     parser.add_argument('name', type=str)
@@ -46,9 +46,16 @@ class TasksPutApiHandler(Resource):
     requested_duration_unit = args["duration_unit"]
     requested_color = args["color"]
 
-    tasks_from_db = user_tasks_collection.find_one({"_id": session["id"], "dates.date": requested_date}, {"dates.tasks.$": 1})
-    json_to_return = {}
-    json_to_return = tasks_from_db["dates"][0]
+    new_task = {
+      "name": "add task test",
+      "priority": "high",
+      "duration": 50,
+      "duration_unit": "hour",
+      "stage": "completed",
+      "color": "blue"
+    }
+    requested_date = "13072021"
+    user_tasks_collection.update_one({"_id": session["id"]}, {'$push': {"tasks_test": new_task}})
 
 
     return({"status": "success"})

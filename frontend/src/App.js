@@ -119,6 +119,20 @@ function App()
   function doneButtonClicked()
   {
     console.log("values: " + name_current_value + " " + duration_current_value);
+
+    axios.put("http://127.0.0.1:5000/api/tasks/add_task").then((res) => 
+    {
+      if(true)
+      {
+        console.log("axios put for add task");
+      }
+    }).catch(function(error)
+    {
+      if(error.response)
+      {
+        console.log("there was an error")
+      }
+    });
   }
 
   return (
