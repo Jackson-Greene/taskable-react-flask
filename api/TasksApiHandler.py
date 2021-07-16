@@ -55,7 +55,7 @@ class TasksPutApiHandler(Resource):
       "color": "blue"
     }
     requested_date = "13072021"
-    user_tasks_collection.update_one({"_id": session["id"]}, {'$push': {"tasks_test": new_task}})
+    user_tasks_collection.update_one({"_id": session["id"], "dates.date": requested_date}, {'$push': {"dates.tasks": new_task}})
 
 
     return({"status": "success"})
