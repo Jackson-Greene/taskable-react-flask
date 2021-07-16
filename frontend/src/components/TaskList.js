@@ -14,9 +14,9 @@ function TaskList(props)
                     return (
                         tasks.map(task => 
                         {
-                            const { name, priority, duration, stage, color } = task;
+                            const { name, priority, duration, duration_unit, stage, color } = task;
                             return(
-                                <Task className="task" name={name} priority={priority} duration={duration} stage={stage} color={color}></Task>
+                                <Task className="task" name={name} priority={priority} duration={duration} duration_unit={duration_unit} stage={stage} color={color}></Task>
                             );
                         })
                     );

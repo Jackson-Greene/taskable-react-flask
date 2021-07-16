@@ -2,8 +2,8 @@ import os
 from flask import Flask, send_from_directory, request, url_for, redirect, session
 from flask_restful import Api, Resource, reqparse
 from flask_cors import CORS #comment this on deployment
-from api.TaskApiHandler import TaskGetHandler
-from api.TaskApiHandler import TaskPutHandler
+from api.TasksApiHandler import TasksGetApiHandler
+from api.TasksApiHandler import TasksPutApiHandler
 from authlib.integrations.flask_client import OAuth
 from datetime import timedelta
 #from auth_decorator import login_required
@@ -67,8 +67,8 @@ def logout():
     return redirect('/')
 
 
-api.add_resource(TaskGetApiHandler, '/api/tasks/get_tasks')
-api.add_resource(TaskPutApiHandler, '/api/tasks/add_task')
+api.add_resource(TasksGetApiHandler, '/api/tasks/get_tasks')
+api.add_resource(TasksPutApiHandler, '/api/tasks/add_task')
 
 #mongo username: server_user
 #mongo password: jUsACC1ArA4sxrOA

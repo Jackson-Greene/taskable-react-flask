@@ -51,7 +51,7 @@ function App()
       month = "0" + month;
     }
 
-    axios.get("http://127.0.0.1:5000/api/tasks?date=" + (day + month + year)).then((res) => 
+    axios.get("http://127.0.0.1:5000/api/tasks/get_tasks?date=" + (day + month + year)).then((res) => 
     {
         const response_data = res.data;
         let tasks_json_array = response_data["tasks"];
@@ -68,8 +68,9 @@ function App()
             completed_tasks_temp.push(
               {
                 "name": current_task["name"],
-                "priority": current_task["priority"] + " priority",
+                "priority": current_task["priority"],
                 "duration": current_task["duration"],
+                "duration_unit": current_task["duration_unit"],
                 "stage": current_task["stage"],
                 "color": current_task["color"]
               }
@@ -80,8 +81,9 @@ function App()
             pending_tasks_temp.push(
               {
                 "name": current_task["name"],
-                "priority": current_task["priority"] + " priority",
+                "priority": current_task["priority"],
                 "duration": current_task["duration"],
+                "duration_unit": current_task["duration_unit"],
                 "stage": current_task["stage"],
                 "color": current_task["color"]
               }

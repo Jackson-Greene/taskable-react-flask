@@ -3,7 +3,7 @@ import './Task.scss';
 
 function Task(props) 
 {
-    const { name, priority, duration, stage, color } = props;
+    const { name, priority, duration, duration_unit, stage, color } = props;
     let stage_image_path = "";
     switch(stage) 
     {
@@ -62,11 +62,11 @@ function Task(props)
                 </div>
                 <div className="task-container" style={{"background": primary_color}}>
                     <div className="left-col">
-                        <p>{priority}</p>
+                        <p>{priority} priority</p>
                         <h2>{name}</h2>
                     </div>
                     <div className="right-col">
-                        <p>{duration}</p>
+                        <p>{duration} {duration_unit}</p>
                         <div className="stage-text-container" style={{"background": secondary_color}}>
                             {stage}
                         </div>

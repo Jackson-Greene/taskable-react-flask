@@ -6,7 +6,7 @@ client = pymongo.MongoClient("mongodb+srv://server_user:jUsACC1ArA4sxrOA@cluster
 database = client["tasks"]
 user_tasks_collection = database.get_collection("user_tasks")
 
-class TaskGetApiHandler(Resource):
+class TasksGetApiHandler(Resource):
   def get(self):
     parser = reqparse.RequestParser()
     parser.add_argument("date", type=str)
@@ -24,7 +24,7 @@ class TaskGetApiHandler(Resource):
     return({})
 
 
-class TaskPutApiHandler(Resource):
+class TasksPutApiHandler(Resource):
   def get(self): 
     return({})
 
